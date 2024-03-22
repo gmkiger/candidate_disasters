@@ -6,6 +6,7 @@ library(geobr)
 library(stringi)
 library(stringr)
 library(tidyverse)
+library(readxl)
 
 #raw files
 raw_96 <- read.csv("Data/1996_candidates.csv")
@@ -93,3 +94,13 @@ raw_12 <- raw_12 %>% rename(elec_year = "Ano.de.eleição",
                             uninformed = "Quantidade.de.candidatos.não.informados")
 
 cities_12 <- unique(raw_12$city)
+
+#### disaster data 
+disaster <- read_excel("Brazilian_disaster_datasets.xlsx")
+
+#checking if cities are untreated
+city_d <- unique(disaster$Municipality)
+city2 <- disaster %>% 
+  group_by(Municipality) %>% 
+  slice(1) %>% 
+  ungroup()
